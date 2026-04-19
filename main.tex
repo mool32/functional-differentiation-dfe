@@ -108,7 +108,7 @@ All 1,584 ablations are released as CSV with the following fields: \texttt{check
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/fig1_head_trajectories.pdf}
-    \caption{\textbf{Each line represents one attention head tracked across 8 training checkpoints.} We ablate the same 144 fixed heads (heads {0, 3, 6, 9, 12, 15} at each of 24 layers) at steps 512, 1 000, 2 000, 4 000, 8 000, 16 000, 64 000, and 143 000 of Pythia 410M training. The y-axis shows |$\Delta$|, the fractional change in validation loss caused by ablating that head. Heads are classified by their trajectory: \textbf{born-critical} (4.2 %, n = 6; important at step 512 and step 143 000), \textbf{emergent} (38.9 %, n = 56; from noise floor to |$\Delta$| > 5$\times$10⁻⁴ by end of training), \textbf{growing} (22.9 %, n = 33; small initial effect amplified during training), and \textbf{never-critical} (34.0 %, n = 49; below threshold throughout). The dominance of the emergent class over the born-critical class demonstrates that most function is not latent at initialization but develops during training.}
+    \caption{\textbf{Each line represents one attention head tracked across 8 training checkpoints.} We ablate the same 144 fixed heads (heads $\{0, 3, 6, 9, 12, 15\}$ at each of 24 layers) at steps 512, 1{,}000, 2{,}000, 4{,}000, 8{,}000, 16{,}000, 64{,}000, and 143{,}000 of Pythia 410M training. The y-axis shows $|\Delta|$, the fractional change in validation loss caused by ablating that head. Heads are classified by their trajectory: \textbf{born-critical} (4.2\%, $n=6$; important at step 512 and step 143{,}000), \textbf{emergent} (38.9\%, $n=56$; from noise floor to $|\Delta| > 5 \times 10^{-4}$ by end of training), \textbf{growing} (22.9\%, $n=33$; small initial effect amplified during training), and \textbf{never-critical} (34.0\%, $n=49$; below threshold throughout). The dominance of the emergent class over the born-critical class demonstrates that most function is not latent at initialization but develops during training.}
     \label{fig:head_trajectories}
 \end{figure}
 
@@ -137,7 +137,7 @@ We return to the single most extreme emergent head as a case study in Section~\r
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/fig2_differentiation_metrics.pdf}
-    \caption{Three complementary metrics of head importance distribution across training, computed from the 144-head sample at each checkpoint. \textbf{(a)} Gini coefficient of |$\Delta$| --- inequality of head importance. Approximately invariant across training (Spearman $\rho$ = +0.12; 95 % CI overlap at all checkpoints). \textbf{(b)} Effective number of important heads, 2^H where H is the Shannon entropy of normalized |$\Delta$| --- biological analog of effective species diversity. Monotonically decreasing ($\rho$ = -0.88), indicating concentration of responsibility in fewer heads. \textbf{(c)} Count of heads with |$\Delta$| > 5$\times$10⁻⁴ --- intuitive threshold-based measure of functional differentiation. Monotonically increasing ($\rho$ = +1.00), indicating broadening of functional base. The combination --- more heads become critical (c), yet critical importance concentrates in the top few (b), with inequality constant (a) --- defines a \textbf{dual differentiation} regime: training simultaneously broadens and concentrates the function landscape.}
+    \caption{Three complementary metrics of head importance distribution across training, computed from the 144-head sample at each checkpoint. \textbf{(a)} Gini coefficient of $|\Delta|$ --- inequality of head importance. Approximately invariant across training (Spearman $\rho = +0.12$; 95\% CI overlap at all checkpoints). \textbf{(b)} Effective number of important heads, $2^H$ where $H$ is the Shannon entropy of normalized $|\Delta|$ --- biological analog of effective species diversity. Monotonically decreasing ($\rho = -0.88$), indicating concentration of responsibility in fewer heads. \textbf{(c)} Count of heads with $|\Delta| > 5 \times 10^{-4}$ --- intuitive threshold-based measure of functional differentiation. Monotonically increasing ($\rho = +1.00$), indicating broadening of functional base. The combination --- more heads become critical (c), yet critical importance concentrates in the top few (b), with inequality constant (a) --- defines a \textbf{dual differentiation} regime: training simultaneously broadens and concentrates the function landscape.}
     \label{fig:differentiation_metrics}
 \end{figure}
 
@@ -183,14 +183,14 @@ We do not claim generality of these predictions beyond Pythia 410M on next-token
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/fig3_dfe_emergence.pdf}
-    \caption{Distribution of fitness effects for 144 head ablations at four representative checkpoints. Histograms (bars), fitted Student's t (black), fitted Normal (red dashed). \textbf{At step 512}, the distribution is dominated by a narrow peak at zero with two outliers; the Student's t AIC advantage ($\Delta$AIC = +140) reflects outlier capture, not distribution shape. \textbf{By step 2 000}, a continuous heavy-tailed distribution has emerged. \textbf{At step 16 000 and step 143 000}, the Student's t form with strong negative skew matches the universal DFE shape reported across biological and engineered adaptive systems [Paper 1]. The gamma shape $\beta$ of the deleterious tail evolves from $\beta$ = 1.77 [95 % CI: 1.23, 2.84] at step 512 into the biological range (E. coli $\beta$ $\approx$ 0.5, yeast $\beta$ $\approx$ 0.7) by step 1 000 and remains there. Titles report n_diff (heads above threshold 5$\times$10⁻⁴), Gini, skewness, and kurtosis.}
+    \caption{Distribution of fitness effects for 144 head ablations at four representative checkpoints. Histograms (bars), fitted Student's $t$ (black), fitted Normal (red dashed). \textbf{At step 512}, the distribution is dominated by a narrow peak at zero with two outliers; the Student's $t$ AIC advantage ($\Delta\text{AIC} = +140$) reflects outlier capture, not distribution shape. \textbf{By step 2{,}000}, a continuous heavy-tailed distribution has emerged. \textbf{At step 16{,}000 and step 143{,}000}, the Student's $t$ form with strong negative skew matches the universal DFE shape reported across biological and engineered adaptive systems \citep{spiro2026universal}. The gamma shape $\beta$ of the deleterious tail evolves from $\beta = 1.77$ [95\% CI: 1.23, 2.84] at step 512 into the biological range (\emph{E. coli} $\beta \approx 0.5$, yeast $\beta \approx 0.7$) by step 1{,}000 and remains there. Titles report $n_\text{diff}$ (heads above threshold $5 \times 10^{-4}$), Gini, skewness, and kurtosis.}
     \label{fig:dfe_emergence}
 \end{figure}
 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/fig4_distribution_fits.pdf}
-    \caption{\textbf{(a)} $\Delta$AIC of Student's t and Laplace distributions relative to Normal, at each checkpoint. Positive values indicate better fit than Normal. Student's t decisively wins at every checkpoint ($\Delta$AIC ≫ 10 throughout), confirming non-Gaussian shape. \textbf{(b)} Gamma shape parameter $\beta$ of the deleterious tail (|$\Delta$| > 10⁻⁴ to exclude numerical noise), with 2 000-sample bootstrap 95 % CI. $\beta$ = 1.77 at step 512 is in the light-tailed regime; the drop to $\beta$ $\approx$ 0.8 at step 1 000 is significant (non-overlapping CIs). Subsequent evolution to $\beta$ $\approx$ 0.6 at step 143 000 matches the biological range marked with dashed lines.}
+    \caption{\textbf{(a)} $\Delta\text{AIC}$ of Student's $t$ and Laplace distributions relative to Normal, at each checkpoint. Positive values indicate better fit than Normal. Student's $t$ decisively wins at every checkpoint ($\Delta\text{AIC} \gg 10$ throughout), confirming non-Gaussian shape. \textbf{(b)} Gamma shape parameter $\beta$ of the deleterious tail ($|\Delta| > 10^{-4}$ to exclude numerical noise), with 2{,}000-sample bootstrap 95\% CI. $\beta = 1.77$ at step 512 is in the light-tailed regime; the drop to $\beta \approx 0.8$ at step 1{,}000 is significant (non-overlapping CIs). Subsequent evolution to $\beta \approx 0.6$ at step 143{,}000 matches the biological range marked with dashed lines.}
     \label{fig:distribution_fits}
 \end{figure}
 
@@ -210,22 +210,24 @@ Sections~\ref{subsec:emergence} and~\ref{subsec:dual} characterized the emergenc
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/fig6_hierarchy.pdf}
-    \caption{Ablation effect distributions at step 143,000 for three perturbation granularities: distributed parametric noise ($\alpha$ = 1·$\sigma$ applied to all parameters of one block, n = 30), single attention head ablation (n = 144), single transformer layer ablation (n = 24). \textbf{(a)} Survival function P(|$\Delta$| > x) on log-log axes. \textbf{(b)} Magnitude density on log |$\Delta$| axis. Three qualitatively distinct regimes are observed, not points on a smooth heaviness gradient:
-
-\begin{center}
-\small
-\begin{tabular}{llll}
-\toprule
-Perturbation & Student's t df & $\Delta$AIC vs Normal & Regime \\
-\midrule
-Distributed noise & $\to$ $\infty$ & -2 & Gaussian (CLT limit) \\
-Head ablation & 2.34 & +589 & \textbf{Heavy-tailed (population-level)} \\
-Layer ablation & 0.85 & +82 & Outlier-plus-Gaussian-base \\
-\bottomrule
-\end{tabular}
-\end{center}Head-level ablation is the primary finding: a robustly heavy-tailed Student's t distribution matching biological DFE form ($\beta$ $\approx$ 0.6, within the \emph{E. coli}–yeast range from Paper 1). The heavy-tailedness is stable under outlier removal (df remains 2.34 after dropping the top-5 extreme observations), indicating a population-level property across many contributing heads. Layer-level heavy-tailedness at n = 24 is by contrast fragile: removing Layer 0 and Layer 5 collapses the fit to Gaussian, revealing that the apparent heavy tail at this granularity is driven by two structural outliers on an otherwise Gaussian base. Distributed noise obeys the CLT into Gaussian regardless of landscape structure. See Fig. S3 for the full sensitivity analysis establishing these regime classifications. \textbf{The universal heavy-tailed DFE form of Paper 1 applies at intermediate discrete granularity, bracketed on both sides: distributed perturbations Gaussianize via CLT, very-coarse discrete ablations become dominated by a few structural outliers.}}
+    \caption{Ablation effect distributions at step 143{,}000 for three perturbation granularities: distributed parametric noise ($\alpha = 1 \cdot \sigma$ applied to all parameters of one block, $n = 30$), single attention head ablation ($n = 144$), single transformer layer ablation ($n = 24$). \textbf{(a)} Survival function $P(|\Delta| > x)$ on log-log axes. \textbf{(b)} Magnitude density on log $|\Delta|$ axis. Three qualitatively distinct regimes are observed, not points on a smooth heaviness gradient (see Table~\ref{tab:three_regimes}). Head-level ablation is the primary finding: a robustly heavy-tailed Student's $t$ distribution matching biological DFE form ($\beta \approx 0.6$, within the \emph{E. coli}--yeast range from Paper~1). The heavy-tailedness is stable under outlier removal ($df$ remains $2.34$ after dropping the top-5 extreme observations), indicating a population-level property. Layer-level heavy-tailedness at $n = 24$ is by contrast fragile: removing Layer~0 and Layer~5 collapses the fit to Gaussian, revealing that the apparent heavy tail at this granularity is driven by two structural outliers on an otherwise Gaussian base. Distributed noise obeys the CLT into Gaussian regardless of landscape structure. See Fig.~S3 for the full sensitivity analysis establishing these regime classifications. \textbf{The universal heavy-tailed DFE form of Paper~1 applies at intermediate discrete granularity, bracketed on both sides: distributed perturbations Gaussianize via CLT, very-coarse discrete ablations become dominated by a few structural outliers.}}
     \label{fig:hierarchy}
 \end{figure}
+
+\begin{table}[t]
+\centering
+\caption{Three qualitatively distinct DFE regimes at step 143{,}000 (cf. Fig.~\ref{fig:hierarchy}).}
+\label{tab:three_regimes}
+\begin{tabular}{llll}
+\toprule
+Perturbation & Student's $t$ $df$ & $\Delta$AIC vs Normal & Regime \\
+\midrule
+Distributed noise & $\to \infty$ & $-2$ & Gaussian (CLT limit) \\
+Head ablation & 2.34 & $+589$ & \textbf{Heavy-tailed (population-level)} \\
+Layer ablation & 0.85 & $+82$ & Outlier-plus-Gaussian-base \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 Paper~1 reported a universal heavy-tailed DFE form across biological and engineered adaptive systems. Our finding in Section~\ref{subsec:dfe_shape} --- that this form emerges during training rather than being present at initialization --- raises an immediate question about the \emph{scope} of the universality: under what conditions on the perturbation does the universal form apply? We show here that three qualitatively distinct DFE regimes coexist in a single trained model, separated by the granularity of the perturbation unit. Only one of these regimes --- intermediate discrete ablations at the attention-head level --- exhibits the universal heavy-tailed form reported in Paper~1.
 
@@ -268,7 +270,7 @@ This is an \textbf{independent witness of the broadening component of dual diffe
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/fig5_layer_heatmap.pdf}
-    \caption{Heatmap of |$\Delta$| for all 24 layer ablations across 8 checkpoints (log color scale). \textbf{Layer 0 is the dominant critical component at every checkpoint} --- removing it grows in impact from |$\Delta$| = 0.28 (step 512) to |$\Delta$| = 2.76 (step 143 000). Layer 5 is second in importance, growing from 0.018 to 0.71; the L0/L5 ratio shrinks from 15.9 to 3.9, indicating L5 catches up to L0 in relative criticality. Middle layers (L9–L15) remain the least critical throughout. The monotonic darkening at every layer confirms that total dependency on every discrete unit increases during training --- a layer-level analog of the head-level differentiation.}
+    \caption{Heatmap of $|\Delta|$ for all 24 layer ablations across 8 checkpoints (log color scale). \textbf{Layer 0 is the dominant critical component at every checkpoint} --- removing it grows in impact from $|\Delta| = 0.28$ (step 512) to $|\Delta| = 2.76$ (step 143{,}000). Layer 5 is second in importance, growing from $0.018$ to $0.71$; the L0/L5 ratio shrinks from $15.9$ to $3.9$, indicating L5 catches up to L0 in relative criticality. Middle layers (L9--L15) remain the least critical throughout. The monotonic darkening at every layer confirms that total dependency on every discrete unit increases during training --- a layer-level analog of the head-level differentiation.}
     \label{fig:layer_heatmap}
 \end{figure}
 
@@ -278,7 +280,7 @@ This is an \textbf{independent witness of the broadening component of dual diffe
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/fig7_L8H9_crystallization.png}
-    \caption{Absolute effect of ablating Layer 8 Head 9 across training (orange, heavy), overlaid on trajectories of other born-critical and emergent heads (gray background). Between step 4 000 and step 8 000, L8H9's ablation effect jumps by more than 20 $\times$ (from 2$\times$10⁻³ to 5.3$\times$10⁻²) and continues growing to 1.54$\times$10⁻¹ by step 143 000 --- roughly 10 $\times$ the second-most-critical head. This single emergence dominates the kurtosis $\approx$ 127 signal observed at step 8 000+ (Fig 4a). The step-4 000-to-8 000 phase-transition-like emergence is a concrete target for mechanistic-interpretability follow-up: identifying the specific computation that crystallizes in L8H9 during this interval would link our component-level quantitative measurement to a circuit-level qualitative understanding.}
+    \caption{Absolute effect of ablating Layer 8 Head 9 across training (orange, heavy), overlaid on trajectories of other born-critical and emergent heads (gray background). Between step 4{,}000 and step 8{,}000, L8H9's ablation effect jumps by more than $20 \times$ (from $2 \times 10^{-3}$ to $5.3 \times 10^{-2}$) and continues growing to $1.54 \times 10^{-1}$ by step 143{,}000 --- approximately $5.7 \times$ the second-most-critical head. This single emergence dominates the kurtosis $\approx 127$ signal observed at step $8{,}000+$ (Fig.~\ref{fig:distribution_fits}a). The step-$4{,}000$-to-$8{,}000$ phase-transition-like emergence is a concrete target for mechanistic-interpretability follow-up: identifying the specific computation that crystallizes in L8H9 during this interval would link our component-level quantitative measurement to a circuit-level qualitative understanding.}
     \label{fig:l8h9}
 \end{figure}
 
@@ -289,11 +291,11 @@ Section~\ref{subsec:emergence} identified 56 heads in the emergent class --- hea
 \textbf{Phase-transition-like trajectory.} L8H9's ablation effect across the 8 tracked checkpoints (Fig.~\ref{fig:l8h9}):
 
 \begin{center}
-\begin{tabular}{lllllllll}
+\begin{tabular}{lcccccccc}
 \toprule
-step & 512 & 1,000 & 2,000 & 4,000 & 8,000 & 16,000 & 64,000 & 143,000 \\
+step & 512 & 1{,}000 & 2{,}000 & 4{,}000 & 8{,}000 & 16{,}000 & 64{,}000 & 143{,}000 \\
 \midrule
-$\ & \Delta\ & $ & $3\!\times\!10^{-5}$ & $1\!\times\!10^{-4}$ & $3\!\times\!10^{-6}$ & $2\!\times\!10^{-3}$ & $\mathbf{5.3\!\times\!10^{-2}}$ & $8.1\!\times\!10^{-2}$ & $1.3\!\times\!10^{-1}$ & $1.5\!\times\!10^{-1}$ \\
+$|\Delta|$ & $3{\times}10^{-5}$ & $1{\times}10^{-4}$ & $3{\times}10^{-6}$ & $2{\times}10^{-3}$ & $\mathbf{5.3{\times}10^{-2}}$ & $8.1{\times}10^{-2}$ & $1.3{\times}10^{-1}$ & $1.5{\times}10^{-1}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -422,12 +424,13 @@ All ablation data (1,584 rows) is available as CSV at \url{https://github.com/mo
 \centering
 \caption{Top-10 most critical heads at step 143{,}000, ranked by $|\Delta|$.}
 \label{tab:top10_heads}
-\begin{tabular}{cccccccccc}
+\begin{tabular}{lcccccccccc}
 \toprule
-Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
-Layer/Head & L8H9 & L4H6 & L0H9 & L1H6 & L12H0 & L16H15 & L7H0 & L13H6 & L8H6 \\
-$|\Delta|$ & 0.154 & 0.027 & 0.0085 & 0.0071 & 0.0063 & 0.0056 & 0.0055 & 0.0051 & 0.0049 \\
-Ratio to top-1 & 1.000 & 0.176 & 0.055 & 0.046 & 0.041 & 0.037 & 0.036 & 0.033 & 0.032 \\
+Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\midrule
+Layer/Head & L8H9 & L4H6 & L0H9 & L1H6 & L12H0 & L16H15 & L7H0 & L13H6 & L8H6 & L4H9 \\
+$|\Delta|$ & 0.154 & 0.0271 & 0.0085 & 0.0071 & 0.0063 & 0.0056 & 0.0055 & 0.0051 & 0.0049 & 0.0048 \\
+Ratio to top-1 & 1.000 & 0.176 & 0.055 & 0.046 & 0.041 & 0.037 & 0.036 & 0.033 & 0.032 & 0.031 \\
 \bottomrule
 \end{tabular}
 \end{table}
