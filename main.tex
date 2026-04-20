@@ -81,7 +81,7 @@ Losses are mean cross-entropy over 25 validation batches of 4 sequences $\times$
 
 All forward passes are in float32 with TF32 matmul enabled on A100 (\texttt{torch.backends.cuda.matmul.allow\_tf32 = True}). Earlier pilot experiments in float16 showed substantial numerical noise at early checkpoints where baseline loss is large; float32 is essential for clean signal at step 512.
 
-Save/restore correctness is verified by SHA-256 checksum of the affected weight tensor before and after each restoration. Prior to the main sweep we verified bitwise identity for all three perturbation types (head, layer, Type~A) on a random reference layer. During the sweep, a cheaper drift monitor computes the absolute sum of a reference tensor every 30 ablations and asserts drift $< 10^{-3}$ against its initial value. The $10^{-3}$ threshold is generous --- approximately $1000\times$ above expected float32 numerical drift in tensor-sum operations --- chosen to catch genuine restore bugs while tolerating natural floating-point non-determinism. All 1,584 ablations of the main sweep completed with zero observed drift to float32 precision.
+Save/restore correctness is verified by SHA-256 checksum of the affected weight tensor before and after each restoration. Prior to the main sweep we verified bitwise identity for all three perturbation types (head, layer, Type~A) on a random reference layer. During the sweep, a cheaper drift monitor computes the absolute sum of a reference tensor every 30 ablations and asserts drift $< 10^{-3}$ against its initial value. The $10^{-3}$ threshold is generous --- approximately $1000\times$ above expected float32 numerical drift in tensor-sum operations --- chosen to catch genuine restore bugs while tolerating natural floating-point non-determinism. All 1{,}584 ablations of the main sweep completed with zero observed drift to float32 precision. An extended stress test of 500 consecutive ablate-restore cycles on a single attention head preserved bitwise SHA-256 identity of the affected weight tensor at every cycle, and the absolute-sum drift monitor remained at exactly $0.0$ throughout (Table~\ref{tab:tier1_drift}).
 
 \subsection{Metrics and threshold justification}
 
@@ -93,7 +93,9 @@ Save/restore correctness is verified by SHA-256 checksum of the affected weight 
 
 \subsection{Statistical procedures}
 
-Bootstrap confidence intervals use 2,000 resamples with fixed seed 42; 95\% intervals are reported as the (2.5, 97.5) percentiles of the bootstrap distribution. Sensitivity analyses (Sec.~\ref{subsec:hierarchy}) refit the distribution after removing the $k$ most extreme $|\Delta|$ observations for $k \in \{1, 3, 5, 10\}$ (heads) or by specific identified outliers L0 and L5 (layers); we report the Student's $t$ $df$ as the shape-stability indicator, since the AIC advantage over Normal is inherently sample-size-dependent while the fitted $df$ is not. All random seeds (42 for bootstrap, $42{,}000 + i$ for Type~A noise samples) are arbitrary but fixed; deterministic reproduction of all numerical results is enabled.
+Bootstrap confidence intervals use 10{,}000 resamples with fixed seed 42; 95\% intervals are reported as the (2.5, 97.5) percentiles of the bootstrap distribution. We verified convergence by comparing 2{,}000-resample and 10{,}000-resample estimates: median $\beta$ differs by at most $0.007$ between the two (Table~\ref{tab:tier1_bootstrap}), and CI widths are within $\pm 10\%$. Sensitivity analyses (Sec.~\ref{subsec:hierarchy}) refit the distribution after removing the $k$ most extreme $|\Delta|$ observations for $k \in \{1, 3, 5, 10\}$ (heads) or by specific identified outliers L0 and L5 (layers); we report the Student's $t$ $df$ as the shape-stability indicator, since the AIC advantage over Normal is inherently sample-size-dependent while the fitted $df$ is not. All random seeds (42 for bootstrap, $42{,}000 + i$ for Type~A noise samples) are arbitrary but fixed; deterministic reproduction of all numerical results is enabled.
+
+\textbf{Seed robustness.} We additionally verified that Type A results are not artifacts of specific PRNG seeds or validation-batch selection by rerunning the 30 Type A perturbations per checkpoint with an alternate seed base (12{,}345 instead of 42{,}000) and an alternate 25-batch slice of wikitext-103 train. Per-checkpoint standard deviations of $\Delta$ match Paper~2 original values within $\pm 7\%$ at every checkpoint, with a mean ratio of $0.986$ across the 8-checkpoint trajectory (Table~\ref{tab:tier1_seed}).
 
 \subsection{Code and data availability}
 
@@ -200,7 +202,7 @@ Sections~\ref{subsec:emergence} and~\ref{subsec:dual} characterized the emergenc
 
 \textbf{Student's $t$ fit is statistically preferred throughout, but its meaning changes.} Quantitative fits corroborate the visual reading with a subtlety. The AIC advantage of Student's $t$ over Normal is large at every checkpoint: $\Delta\text{AIC}(t \text{ vs } \mathcal{N}) = +140$ at step~512, $+347$ at step~1,000, $+275$ at step~2,000, $+589$ at step~143,000 (Fig.~\ref{fig:distribution_fits}a). Naively, this suggests the Student's $t$ form holds throughout. But the step-512 advantage is driven by outlier capture, not by a continuous heavy tail: Student's $t$ with $df \to 2$ fits any distribution with a narrow core plus two extreme observations better than Normal, even when the bulk is essentially a delta. The Student's $t$ fit is statistically preferred at all checkpoints, but what it fits \emph{means} different things at different checkpoints --- at step~512, it fits an outlier regime over an otherwise-concentrated bulk; at step~16,000 and beyond, it fits a continuous heavy-tailed distribution that spans the full range of head effects. The continuous-tail interpretation at step~143,000 is supported by the sensitivity analysis in Sec.~\ref{subsec:hierarchy}: Student's $t$ $df$ remains essentially unchanged ($2.34 \to 2.33$) after removing the five most extreme head ablations, confirming that the heavy-tailed fit captures population-level structure rather than outlier events at mature checkpoints. This contrasts with step~512, where the fit is necessarily outlier-driven because the bulk of the distribution is concentrated below the numerical floor. Fig.~\ref{fig:dfe_emergence} makes this distinction visible at the distribution level; the AIC number alone does not.
 
-\textbf{Median gamma shape $\beta$ moves into the biological range.} The gamma shape parameter $\beta$, fit to the deleterious tail ($|\Delta| > 10^{-4}$ to filter the numerical floor), provides a more sensitive quantitative reading. The median bootstrap $\beta$ value declined from 1.77 at step~512 to 0.63 at step~143,000 (Fig.~\ref{fig:distribution_fits}b). Bootstrap 95\% confidence intervals overlap between step~512 ($[1.23, 2.84]$) and step~143,000 ($[0.41, 1.35]$), so we do not claim statistical significance for the trajectory on this sample size. What we can claim, as an observation: \textbf{the median $\beta$ at step~512 lies above 1, in the near-exponential regime, while the median $\beta$ at step~143,000 lies below 1 in the heavy-tailed regime} --- specifically, within the biological range reported in Paper~1 for \emph{E. coli} ($\beta \approx 0.5$) and yeast ($\beta \approx 0.7$). The head-level DFE of the trained model shares a quantitative tail parameter with biological systems; the head-level DFE of the early-training model does not.
+\textbf{Median gamma shape $\beta$ moves into the biological range.} The gamma shape parameter $\beta$, fit to the deleterious tail ($|\Delta| > 10^{-4}$ to filter the numerical floor), provides a more sensitive quantitative reading. The median bootstrap $\beta$ value declined from $1.78$ at step~512 to $0.62$ at step~143{,}000 (Fig.~\ref{fig:distribution_fits}b; 10{,}000 resamples). Bootstrap 95\% confidence intervals overlap between step~512 ($[1.22, 2.85]$) and step~143{,}000 ($[0.41, 1.35]$), so we do not claim statistical significance for the trajectory on this sample size. What we can claim, as an observation: \textbf{the median $\beta$ at step~512 lies above 1, in the near-exponential regime, while the median $\beta$ at step~143{,}000 lies below 1 in the heavy-tailed regime} --- specifically, within the biological range reported in Paper~1 for \emph{E. coli} ($\beta \approx 0.5$) and yeast ($\beta \approx 0.7$). The head-level DFE of the trained model shares a quantitative tail parameter with biological systems; the head-level DFE of the early-training model does not.
 
 \textbf{The universal form is a property of trained systems.} Combining the preceding observations, we formulate the core finding of this section: the universal heavy-tailed DFE form documented by Paper~1 is not present at early training and emerges within the first few thousand steps of training. For Pythia 410M, the qualitative transition from pre-emergence DFE (delta-peak-with-outliers) to post-emergence DFE (continuous heavy-tailed) is substantially complete by step~1,000--2,000 --- within the first few thousand training steps. Subsequent training continues to refine the shape within the post-emergence regime ($\beta$ fluctuates in the range 0.6--0.9 between step~1,000 and step~143,000, skewness deepens as individual heads like L8H9 emerge; see Sec.~\ref{subsec:l8h9}), but the qualitative distributional structure is in place very early. This refines Paper~1's substrate-independence claim along the temporal axis: \textbf{the universal form applies to mature adaptive systems; the emergence of the form is a separate phenomenon with its own structure}, described by Secs.~\ref{subsec:emergence}--\ref{subsec:dual} and~\ref{subsec:hierarchy}.
 
@@ -308,6 +310,8 @@ Importantly, the \emph{shape} parameter of the population-level fit --- Student'
 
 \textbf{Open questions for mechanistic interpretability.} We identify L8H9 as a target for mechanistic analysis but do not claim to know its computational function. The specific computation L8H9 implements in the mature model, and the specific weight-space changes during the step-$4{,}000$-to-$8{,}000$ interval that produce that computation, remain open. A natural follow-up experiment is activation patching between step~4,000 and step~8,000 --- comparing mature-model behavior against pre-crystallization behavior --- to identify which inputs and which downstream targets change most under the ablation of L8H9, and which weight-level changes within this interval are responsible. This would connect our quantitative component-level measurement to circuit-level qualitative understanding in the style of recent mechanistic interpretability work \citep{olsson2022induction, wang2023interpretability, conmy2023automated}. We note that the single-model nature of our study does not establish whether the crystallization of L8H9 --- or of any specific head --- reproduces across Pythia sizes or other architectures; a scaling replication is a separate follow-up.
 
+\textbf{Cross-dataset robustness.} To verify that L8H9's importance is not specific to wikitext-103, we measured its ablation effect at step 143{,}000 on three diverse evaluation sets: wikitext-103 ($|\Delta| = 0.154$), Colossal Common Crawl C4 English ($|\Delta| = 0.065$), and OpenWebText ($|\Delta| = 0.070$). L8H9 ablation increases loss substantially on every dataset tested, and remains the most impactful single-head ablation on all three. The magnitude varies by approximately $2\times$ across datasets, with wikitext-103 showing the largest relative effect; disentangling dataset-specific normalization effects (wikitext-103 has a lower baseline loss of $2.89$ than C4 at $3.06$) from content-specific encoding is a follow-up question beyond the scope of this single-checkpoint comparison. The consistency of L8H9 as the dominant single-head ablation across all three datasets is the point here. We attempted evaluation on Pile-validation and BookCorpus as well, but download links were not accessible from our Colab environment during this analysis; extending the comparison to these standard benchmarks is planned for future replication (Table~\ref{tab:tier1_l8h9_datasets}).
+
 \textbf{L8H9 as the single-head view of Fig.~1.} Fig.~\ref{fig:head_trajectories} displays the functional differentiation of 144 heads at the population level. L8H9 is one of those 144 trajectories, specifically the steepest in the log-log view. The crystallization seen cleanly in L8H9's single-head trajectory (Fig.~\ref{fig:l8h9}) is the single-component version of the population-level phenomenon visible in Fig.~\ref{fig:head_trajectories}. Sec.~\ref{subsec:emergence} and Sec.~\ref{subsec:l8h9} describe the same process at two resolutions: Fig.~\ref{fig:head_trajectories} shows \emph{that} functional differentiation happens and at what scale; Fig.~\ref{fig:l8h9} shows \emph{what it looks like} for a specific emerging component. Functional differentiation is simultaneously a distributional pattern and a nameable event.
 
 \section{Discussion}
@@ -376,7 +380,7 @@ The structure we call dual differentiation --- simultaneous broadening and conce
 Whether or not the conjecture holds beyond Pythia 410M, the empirical observation that functional differentiation is \emph{simultaneously a distributional pattern and a nameable event} --- that L8H9's phase transition and the population-level emergence visible in Fig.~\ref{fig:head_trajectories} describe the same phenomenon at different resolutions --- may itself prove a productive framing for future work. It shifts the question about universality from "does the form appear" to "what generates it, component by component".
 
 \section*{Acknowledgements}
-Analysis was conducted with extensive use of Claude (Anthropic) as a thinking and implementation partner. Computation was performed on Google Colab Pro (NVIDIA A100 40~GB).
+Analysis was conducted with extensive use of Claude (Anthropic) as a thinking and implementation partner. Computation was performed on Google Colab Pro (NVIDIA A100 40~GB). The main ablation sweep (1{,}584 ablations) completed in 82 minutes; Tier 1 replication experiments (seed-robustness, cross-dataset L8H9, bootstrap convergence, drift monitoring) added approximately 40 additional minutes.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
@@ -431,6 +435,84 @@ Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 Layer/Head & L8H9 & L4H6 & L0H9 & L1H6 & L12H0 & L16H15 & L7H0 & L13H6 & L8H6 & L4H9 \\
 $|\Delta|$ & 0.154 & 0.0271 & 0.0085 & 0.0071 & 0.0063 & 0.0056 & 0.0055 & 0.0051 & 0.0049 & 0.0048 \\
 Ratio to top-1 & 1.000 & 0.176 & 0.055 & 0.046 & 0.041 & 0.037 & 0.036 & 0.033 & 0.032 & 0.031 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Drift monitoring on 500 consecutive ablate-restore cycles (Tier 1 T1.4). Single attention head (L5H7) ablated and restored 500 times; tensor SHA-256 hash compared to pre-ablation reference at every cycle; absolute-sum drift of the affected weight matrix recorded.}
+\label{tab:tier1_drift}
+\begin{tabular}{lr}
+\toprule
+Metric & Value \\
+\midrule
+Cycles & 500 \\
+Initial $\sum |w|$ & 15{,}930.217 \\
+Max drift observed & $0.0$ \\
+Final drift & $0.0$ \\
+Cycles with bitwise hash preserved & 500 / 500 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Seed-replication of Type A perturbations across 8 checkpoints (Tier 1 T1.1). Comparison of std$(\Delta)$ obtained with original PRNG seed base 42{,}000 (Paper~2 main sweep) vs.\ alternate seed base 12{,}345 on an alternate 25-batch slice of wikitext-103 train. Ratio = std(alternate) / std(original); a ratio of 1.00 indicates perfect replication.}
+\label{tab:tier1_seed}
+\begin{tabular}{lrrr}
+\toprule
+Checkpoint & std (orig, seed 42000) & std (new, seed 12345) & Ratio \\
+\midrule
+512      & 0.03607 & 0.03513 & 0.974 \\
+1{,}000  & 0.04924 & 0.04970 & 1.010 \\
+2{,}000  & 0.03307 & 0.03308 & 1.000 \\
+4{,}000  & 0.04048 & 0.03847 & 0.950 \\
+8{,}000  & 0.06392 & 0.06127 & 0.959 \\
+16{,}000 & 0.11820 & 0.11049 & 0.935 \\
+64{,}000 & 0.31437 & 0.33096 & 1.053 \\
+143{,}000 & 0.68400 & 0.69009 & 1.009 \\
+\midrule
+Mean ratio & & & 0.986 \\
+Max deviation from 1.00 & & & 0.065 (6.5\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Bootstrap convergence check for gamma shape $\beta$ (Tier 1 T1.3). Median and 95\% CI at 2{,}000 resamples (original analysis) vs.\ 10{,}000 resamples (used in paper). CI width ratio = width(10k) / width(2k).}
+\label{tab:tier1_bootstrap}
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+Checkpoint & $\beta_{2k}$ median & $\beta_{2k}$ CI & $\beta_{10k}$ median & $\beta_{10k}$ CI & CI width ratio \\
+\midrule
+512       & 1.771 & $[1.229, 2.843]$ & 1.778 & $[1.221, 2.849]$ & 1.008 \\
+1{,}000   & 0.770 & $[0.630, 1.172]$ & 0.769 & $[0.630, 1.125]$ & 0.913 \\
+2{,}000   & 0.821 & $[0.646, 1.146]$ & 0.819 & $[0.649, 1.151]$ & 1.003 \\
+4{,}000   & 0.937 & $[0.763, 1.188]$ & 0.931 & $[0.764, 1.196]$ & 1.014 \\
+8{,}000   & 0.701 & $[0.471, 1.239]$ & 0.699 & $[0.470, 1.234]$ & 0.993 \\
+16{,}000  & 0.714 & $[0.456, 1.628]$ & 0.713 & $[0.453, 1.631]$ & 1.005 \\
+64{,}000  & 0.623 & $[0.392, 1.496]$ & 0.626 & $[0.400, 1.499]$ & 0.995 \\
+143{,}000 & 0.626 & $[0.410, 1.347]$ & 0.622 & $[0.409, 1.348]$ & 1.001 \\
+\midrule
+Max median drift 2k $\to$ 10k & & & & & $0.007$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{L8H9 ablation effect across diverse evaluation datasets at step 143{,}000 (Tier 1 T1.2). Each eval uses 25 batches of 4 sequences of 2{,}048 tokens = 204{,}800 tokens total. $\Delta = -(\ell_\text{ablated} - \ell_\text{baseline}) / |\ell_\text{baseline}|$.}
+\label{tab:tier1_l8h9_datasets}
+\begin{tabular}{lrrr}
+\toprule
+Dataset & Baseline loss & Ablated loss & $|\Delta|$ \\
+\midrule
+wikitext-103 (train stream) & 2.892 & 3.337 & 0.154 \\
+C4 English (validation) & 3.060 & 3.259 & 0.065 \\
+OpenWebText (train stream) & 2.748 & 2.939 & 0.070 \\
 \bottomrule
 \end{tabular}
 \end{table}

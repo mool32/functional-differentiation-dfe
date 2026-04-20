@@ -89,6 +89,20 @@ Living document. Accumulate items as they arise during writing.
 - [ ] Consider adding abstract language that foregrounds "we measure" over "we show" for the conjecture specifically
 - [ ] Ensure Section 3.2 says "conjecture" not "finding" or "principle" at every reference
 
+## Tier 1 replication (COMPLETED 2026-04-20)
+
+- [x] **T1.1** Seed replication: std ratios 0.93-1.05 across 8 checkpoints, max deviation 6.5%. PASS.
+- [x] **T1.2** L8H9 cross-dataset: |Δ| = 0.154 (wikitext) / 0.065 (C4) / 0.070 (OpenWebText). L8H9 dominant on all three. INVESTIGATE formally (range > 50% of mean) but content-defensible as "magnitude varies across data distributions, sign and substantiality consistent". Integrated honestly in Section 3.5 + Table S4.
+- [x] **T1.3** Bootstrap 10k: max median β drift 0.007, CI widths within ±10%. PASS. Main text now uses 10k values.
+- [x] **T1.4** Drift monitoring: 500 cycles, zero drift, 500/500 hash preservation. PASS (perfect).
+- [x] Data saved: `data/tier1_summary.json`
+- [x] Supplementary tables added: Table S2 (drift), S3 (seed), S4 (bootstrap), S5 (L8H9 cross-dataset)
+- [x] Methods 2.4 updated with 500-cycle stress test
+- [x] Methods 2.6 updated with seed-robustness + 10k bootstrap
+- [x] Section 3.3 β values updated to 10k bootstrap
+- [x] Section 3.5 L8H9 cross-dataset paragraph added (no speculative interpretation)
+- [x] Acknowledgements updated with Tier 1 compute mention
+
 ## Final pre-submission checks
 
 - [ ] Read entire paper in one sitting, note any awkward transitions
