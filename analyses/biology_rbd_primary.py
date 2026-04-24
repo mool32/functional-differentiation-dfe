@@ -42,9 +42,9 @@ RBM_RANGE = (437, 507)
 # Data URLs
 PDB_URL = f'https://files.rcsb.org/download/{PDB_ID}.pdb'
 DMS_URLS = [
-    'https://raw.githubusercontent.com/jbloomlab/SARS-CoV-2-RBD_DMS/master/results/summary/single_mut_effects.csv',
-    'https://raw.githubusercontent.com/jbloomlab/SARS-CoV-2-RBD_DMS/main/results/summary/single_mut_effects.csv',
-    'https://raw.githubusercontent.com/jbloomlab/SARS-CoV-2-RBD_DMS/master/results/single_mut_effects/single_mut_effects.csv',
+    # LFS-resolved URL (media subdomain serves the actual file, not the pointer)
+    'https://media.githubusercontent.com/media/jbloomlab/SARS-CoV-2-RBD_DMS/master/results/single_mut_effects/single_mut_effects.csv',
+    'https://media.githubusercontent.com/media/jbloomlab/SARS-CoV-2-RBD_DMS/main/results/single_mut_effects/single_mut_effects.csv',
 ]
 
 
@@ -172,7 +172,8 @@ def main():
     wt_col = None
     for c in dms.columns:
         lc = c.lower()
-        if pos_col is None and lc in ('site', 'position', 'pos', 'residue', 'site_rbd'):
+        # Prefer spike numbering (site_SARS2) since it matches PDB 6M0J numbering
+        if pos_col is None and lc in ('site_sars2', 'site_sars-2'):
             pos_col = c
         if bind_col is None and 'bind' in lc and 'avg' in lc:
             bind_col = c
@@ -180,6 +181,13 @@ def main():
             mut_col = c
         if wt_col is None and lc in ('wildtype', 'wt', 'wildtype_aa', 'aa_wt'):
             wt_col = c
+    # Fallback: site_RBD if site_SARS2 not found (different numbering)
+    if pos_col is None:
+        for c in dms.columns:
+            lc = c.lower()
+            if lc in ('site', 'position', 'pos', 'residue', 'site_rbd'):
+                pos_col = c
+                break
     if pos_col is None:
         for c in dms.columns:
             if dms[c].dtype in (int, np.int64, 'int64') and dms[c].min() > 100 and dms[c].max() < 600:

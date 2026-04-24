@@ -1,0 +1,62 @@
+{
+  "generated": "2026-04-24T20:27:57.416819+00:00",
+  "pre_registration": "invariants_preregistration_v4_rbd.md",
+  "pre_registration_commit": "7f4c638017",
+  "substrate": "SARS-CoV-2 RBD",
+  "pdb": "6M0J",
+  "chain": "E",
+  "lambda_angstrom": 8.0,
+  "min_mutants": 10,
+  "primary": {
+    "rho": {
+      "rho": 0.4871515991731615,
+      "p": 5.890963499326178e-13,
+      "n": 194,
+      "ci_lo": 0.36168120663742453,
+      "ci_hi": 0.5985414822429167
+    },
+    "verdict": "FAIL_WRONG_DIRECTION"
+  },
+  "methodology_null": {
+    "mean": -0.0001865673512272925,
+    "std": 0.07126834553299381,
+    "ci_95": [
+      -0.1375605604080714,
+      0.1460961932050184
+    ],
+    "span": 0.1460961932050184,
+    "gate": "CAUTION",
+    "adjusted_thresholds": {
+      "strong": 0.35,
+      "partial": 0.25,
+      "weak": 0.15
+    }
+  },
+  "secondary_lambda_sensitivity": {
+    "6.0": {
+      "rho": 0.5191551887294508,
+      "n": 194
+    },
+    "10.0": {
+      "rho": 0.46322697656756756,
+      "n": 194
+    },
+    "12.0": {
+      "rho": 0.45275990281606654,
+      "n": 194
+    }
+  },
+  "secondary_RBM_stratified": {
+    "RBM": {
+      "n": 71,
+      "rho": 0.18890006706908116,
+      "p": 0.11463731825591163
+    },
+    "non_RBM": {
+      "n": 123,
+      "rho": 0.7846164511890142,
+      "p": 6.928494192888031e-27
+    }
+  },
+  "n_residues_final": 194
+}
