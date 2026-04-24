@@ -1,0 +1,252 @@
+{
+  "generated": "2026-04-24T18:08:39.257105+00:00",
+  "n_modules_common": 43,
+  "baseline_correlations": {
+    "PR_schieb_d2.5__pert_dixit": NaN,
+    "PR_schieb_d2.5__pert_replogle": NaN,
+    "PR_bp_E12.5__pert_dixit": 0.6004228329809724,
+    "PR_bp_E12.5__pert_replogle": 0.6880809874668848
+  },
+  "consensus_top_modules": {
+    "Cell Cycle": 4,
+    "UPR-ATF6": 4,
+    "Autophagy": 4,
+    "Calcium": 3,
+    "p53": 3,
+    "UPR-PERK": 3,
+    "HSF1": 3,
+    "mTOR": 3,
+    "HIF": 3
+  },
+  "top10_per_measurement": {
+    "PR_schieb_d2.5": [
+      "Cell Cycle",
+      "Calcium",
+      "HSF1",
+      "p53",
+      "HIF",
+      "UPR-ATF6",
+      "UPR-PERK",
+      "ER",
+      "mTOR",
+      "Autophagy"
+    ],
+    "PR_bp_E12.5": [
+      "Calcium",
+      "Cell Cycle",
+      "Wnt",
+      "p53",
+      "ERK/MAPK",
+      "HIF",
+      "UPR-ATF6",
+      "HSF1",
+      "mTOR",
+      "Autophagy"
+    ],
+    "pert_dixit": [
+      "Cell Cycle",
+      "cGAS-STING",
+      "p53",
+      "NRF2",
+      "UPR-PERK",
+      "UPR-ATF6",
+      "cAMP/CREB",
+      "mTOR",
+      "Autophagy",
+      "SREBP"
+    ],
+    "pert_replogle": [
+      "Type I IFN",
+      "Calcium",
+      "Cell Cycle",
+      "NRF2",
+      "HIF",
+      "UPR-ATF6",
+      "UPR-PERK",
+      "HSF1",
+      "Autophagy",
+      "SREBP"
+    ]
+  },
+  "leave_category_out": {
+    "nuclear_receptor": {
+      "n_removed": 14,
+      "n_left": 29,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": 0.4714285714285713,
+        "PR_schieb_d2.5__pert_replogle": 0.6138687076985407,
+        "PR_bp_E12.5__pert_dixit": 0.3665024630541871,
+        "PR_bp_E12.5__pert_replogle": 0.48429609925173805
+      }
+    },
+    "stress_infrastructure": {
+      "n_removed": 7,
+      "n_left": 36,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": NaN,
+        "PR_schieb_d2.5__pert_replogle": NaN,
+        "PR_bp_E12.5__pert_dixit": 0.5114543114543115,
+        "PR_bp_E12.5__pert_replogle": 0.6393864134762817
+      }
+    },
+    "growth_proliferation": {
+      "n_removed": 5,
+      "n_left": 38,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": NaN,
+        "PR_schieb_d2.5__pert_replogle": NaN,
+        "PR_bp_E12.5__pert_dixit": 0.5992997045628624,
+        "PR_bp_E12.5__pert_replogle": 0.6730252200362226
+      }
+    },
+    "dev_signaling": {
+      "n_removed": 6,
+      "n_left": 37,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": NaN,
+        "PR_schieb_d2.5__pert_replogle": NaN,
+        "PR_bp_E12.5__pert_dixit": 0.6325272641062113,
+        "PR_bp_E12.5__pert_replogle": 0.7163507575868472
+      }
+    },
+    "immune_cytokine": {
+      "n_removed": 3,
+      "n_left": 40,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": NaN,
+        "PR_schieb_d2.5__pert_replogle": NaN,
+        "PR_bp_E12.5__pert_dixit": 0.6409005628517825,
+        "PR_bp_E12.5__pert_replogle": 0.7788466635837411
+      }
+    },
+    "second_messenger": {
+      "n_removed": 3,
+      "n_left": 40,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": NaN,
+        "PR_schieb_d2.5__pert_replogle": NaN,
+        "PR_bp_E12.5__pert_dixit": 0.6136960600375236,
+        "PR_bp_E12.5__pert_replogle": 0.6735255682654251
+      }
+    },
+    "sensors": {
+      "n_removed": 3,
+      "n_left": 40,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": NaN,
+        "PR_schieb_d2.5__pert_replogle": NaN,
+        "PR_bp_E12.5__pert_dixit": 0.6801125703564729,
+        "PR_bp_E12.5__pert_replogle": 0.6852939973217861
+      }
+    },
+    "other": {
+      "n_removed": 2,
+      "n_left": 41,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": NaN,
+        "PR_schieb_d2.5__pert_replogle": NaN,
+        "PR_bp_E12.5__pert_dixit": 0.6090592334494774,
+        "PR_bp_E12.5__pert_replogle": 0.7051731131409877
+      }
+    }
+  },
+  "keep_only_category": {
+    "nuclear_receptor": {
+      "n": 14,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": null,
+        "PR_schieb_d2.5__pert_replogle": null,
+        "PR_bp_E12.5__pert_dixit": 0.7098901098901099,
+        "PR_bp_E12.5__pert_replogle": 0.4575780636244475
+      }
+    },
+    "stress_infrastructure": {
+      "n": 7,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": 0.28571428571428575,
+        "PR_schieb_d2.5__pert_replogle": -0.1785714285714286,
+        "PR_bp_E12.5__pert_dixit": 0.14285714285714288,
+        "PR_bp_E12.5__pert_replogle": 0.0
+      }
+    },
+    "growth_proliferation": {
+      "n": 5,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": 0.6,
+        "PR_schieb_d2.5__pert_replogle": 0.49999999999999994,
+        "PR_bp_E12.5__pert_dixit": 0.6,
+        "PR_bp_E12.5__pert_replogle": 0.8999999999999998
+      }
+    },
+    "dev_signaling": {
+      "n": 6,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": 0.4285714285714286,
+        "PR_schieb_d2.5__pert_replogle": 0.8285714285714287,
+        "PR_bp_E12.5__pert_dixit": 0.3142857142857143,
+        "PR_bp_E12.5__pert_replogle": 0.8285714285714287
+      }
+    },
+    "immune_cytokine": {
+      "n": 3,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": -0.5,
+        "PR_schieb_d2.5__pert_replogle": -1.0,
+        "PR_bp_E12.5__pert_dixit": -0.5,
+        "PR_bp_E12.5__pert_replogle": -1.0
+      }
+    },
+    "second_messenger": {
+      "n": 3,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": -0.5,
+        "PR_schieb_d2.5__pert_replogle": 0.5,
+        "PR_bp_E12.5__pert_dixit": 0.5,
+        "PR_bp_E12.5__pert_replogle": 1.0
+      }
+    },
+    "sensors": {
+      "n": 3,
+      "correlations": {
+        "PR_schieb_d2.5__pert_dixit": -0.5,
+        "PR_schieb_d2.5__pert_replogle": 1.0,
+        "PR_bp_E12.5__pert_dixit": -0.5,
+        "PR_bp_E12.5__pert_replogle": 1.0
+      }
+    }
+  },
+  "category_responsibility": {
+    "nuclear_receptor": {
+      "mean_abs_drho": NaN,
+      "n_removed": 14
+    },
+    "stress_infrastructure": {
+      "mean_abs_drho": NaN,
+      "n_removed": 7
+    },
+    "growth_proliferation": {
+      "mean_abs_drho": NaN,
+      "n_removed": 5
+    },
+    "dev_signaling": {
+      "mean_abs_drho": NaN,
+      "n_removed": 6
+    },
+    "immune_cytokine": {
+      "mean_abs_drho": NaN,
+      "n_removed": 3
+    },
+    "second_messenger": {
+      "mean_abs_drho": NaN,
+      "n_removed": 3
+    },
+    "sensors": {
+      "mean_abs_drho": NaN,
+      "n_removed": 3
+    },
+    "other": {
+      "mean_abs_drho": NaN,
+      "n_removed": 2
+    }
+  }
+}
