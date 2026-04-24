@@ -1,0 +1,71 @@
+{
+  "generated": "2026-04-24T09:25:35.194416+00:00",
+  "outcome_transform": "log(max(|Delta|, 1e-6))",
+  "absorb_tests": [
+    {
+      "invariant": "OV_PR",
+      "r2_label_only": 0.48193746132251003,
+      "r2_invariant_only": 0.0004936100716647074,
+      "r2_joint": 0.4838250959534971,
+      "beta_label_alone": 2.5036735343862375,
+      "beta_label_joint": 2.5084628678274363,
+      "p_label_joint": 5.603279291396943e-22,
+      "beta_invariant_alone": 0.038930341909953044,
+      "beta_invariant_joint": 0.0761654403123101,
+      "p_invariant_joint": 0.4738988807390395,
+      "fractional_label_reduction": -0.00191292250184403
+    },
+    {
+      "invariant": "QK_PR",
+      "r2_label_only": 0.48193746132251003,
+      "r2_invariant_only": 0.23752715421420434,
+      "r2_joint": 0.5204346676032058,
+      "beta_label_alone": 2.5036735343862375,
+      "beta_label_joint": 2.1475188575209394,
+      "p_label_joint": 6.915029952951216e-16,
+      "beta_invariant_alone": 0.8539901165130832,
+      "beta_invariant_joint": 0.3848958321868001,
+      "p_invariant_joint": 0.0009884158633171828,
+      "fractional_label_reduction": 0.1422528424627884
+    },
+    {
+      "invariant": "OV_entropy",
+      "r2_label_only": 0.48193746132251003,
+      "r2_invariant_only": 0.0004461587472400774,
+      "r2_joint": 0.4821056810137325,
+      "beta_label_alone": 2.5036735343862375,
+      "beta_label_joint": 2.5031241266910227,
+      "p_label_joint": 7.072136097473186e-22,
+      "beta_invariant_alone": 0.03701186059605638,
+      "beta_invariant_joint": 0.022728175941949535,
+      "p_invariant_joint": 0.8308509862195492,
+      "fractional_label_reduction": 0.0002194406290073743
+    },
+    {
+      "invariant": "QK_entropy",
+      "r2_label_only": 0.48193746132251003,
+      "r2_invariant_only": 0.2735361452709927,
+      "r2_joint": 0.5364247307982839,
+      "beta_label_alone": 2.5036735343862375,
+      "beta_label_joint": 2.075033027080301,
+      "p_label_joint": 1.9407526830120356e-15,
+      "beta_invariant_alone": 0.9164390215159622,
+      "beta_invariant_joint": 0.4589871499317193,
+      "p_invariant_joint": 7.767795363996854e-05,
+      "fractional_label_reduction": 0.17120463248057438
+    },
+    {
+      "invariant": "random_control",
+      "r2_label_only": 0.48193746132251003,
+      "r2_invariant_only": 0.005084086762908169,
+      "r2_joint": 0.4901376975287943,
+      "beta_label_alone": 2.5036735343862375,
+      "beta_label_joint": 2.5127176765967993,
+      "p_label_joint": 3.2427409924134595e-22,
+      "beta_invariant_alone": 0.12494034143380622,
+      "beta_invariant_joint": 0.1587361567629087,
+      "p_invariant_joint": 0.13432970141418926,
+      "fractional_label_reduction": -0.003612348849139769
+    }
+  ]
+}
