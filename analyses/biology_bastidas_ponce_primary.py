@@ -74,7 +74,7 @@ def main():
     print('[BP] loading Bastidas-Ponce...', flush=True)
     a = ad.read_h5ad(BP)
     print(f'  shape: {a.shape}', flush=True)
-    days = a.obs['day'].values
+    days = pd.to_numeric(a.obs['day'].astype(str), errors='coerce').values
     print(f'  day counts: {dict(pd.Series(days).value_counts().sort_index())}', flush=True)
 
     # ------------------- module scores + V4a -------------------
