@@ -36,6 +36,7 @@ PG_REFERENCE_URL = 'https://raw.githubusercontent.com/OATML-Markslab/ProteinGym/
 PG_PARQUET_TEMPLATE = 'https://huggingface.co/datasets/OATML-Markslab/ProteinGym_v1/resolve/main/DMS_substitutions/train-0000{}-of-00005.parquet'
 N_PARQUET_CHUNKS = 5
 AF_URL = 'https://alphafold.ebi.ac.uk/files/AF-{uniprot}-F1-model_v4.pdb'
+PG_STRUCT_ZIP_URL = 'https://marks.hms.harvard.edu/proteingym/ProteinGym_v1.3/ProteinGym_AF2_structures.zip'
 
 
 def get_pre_reg_commit():
@@ -152,29 +153,36 @@ def main():
     agg = agg[agg['n_mutants'] >= MIN_MUTANTS].copy()
     print(f'  {before} -> {len(agg)} proteins after MIN_MUTANTS={MIN_MUTANTS}')
 
-    # -------- AlphaFold structures --------
-    print(f'[pg] fetching AlphaFold structures...', flush=True)
+    # -------- ProteinGym-bundled AF2 structures (already sliced to DMS region) --------
+    struct_zip = os.path.join(cache, 'ProteinGym_AF2_structures.zip')
+    struct_dir = os.path.join(cache, 'af2_structures', 'ProteinGym_AF2_structures')
+    if not os.path.exists(struct_dir) or len(os.listdir(struct_dir)) < 10:
+        print(f'[pg] downloading ProteinGym AF2 structures ({PG_STRUCT_ZIP_URL})...', flush=True)
+        download(PG_STRUCT_ZIP_URL, struct_zip, min_size=10_000_000)
+        import zipfile
+        with zipfile.ZipFile(struct_zip) as zf:
+            zf.extractall(os.path.join(cache, 'af2_structures'))
+    print(f'[pg] structures ready: {len(os.listdir(struct_dir))} PDB files', flush=True)
+
+    print(f'[pg] computing contact_PR per viral protein...', flush=True)
     results = []
     for _, row in agg.iterrows():
         uid = row['UniProt_ID']
-        # ProteinGym uses 'A0A123_ORG' style; AlphaFold wants just the base accession before underscore
-        af_uid = uid.split('_')[0]
-        pdb_path = os.path.join(af_cache, f'AF-{af_uid}.pdb')
-        ok = download(AF_URL.format(uniprot=af_uid), pdb_path, min_size=1000)
-        if not ok or not os.path.exists(pdb_path):
-            results.append({**row, 'contact_PR': np.nan, 'n_residues': 0, 'af_id': af_uid,
-                             'status': 'af_missing'})
+        pdb_path = os.path.join(struct_dir, f'{uid}.pdb')
+        if not os.path.exists(pdb_path):
+            results.append({**row, 'contact_PR': np.nan, 'n_residues': 0,
+                             'status': 'pdb_missing'})
             continue
         ca = parse_pdb_ca(pdb_path)
         if len(ca) < 20:
-            results.append({**row, 'contact_PR': np.nan, 'n_residues': len(ca), 'af_id': af_uid,
+            results.append({**row, 'contact_PR': np.nan, 'n_residues': len(ca),
                              'status': 'too_short'})
             continue
         coords = np.array([ca[k] for k in sorted(ca.keys())])
         pr = contact_PR_from_coords(coords, LAMBDA_A)
         results.append({**row, 'contact_PR': pr, 'n_residues': len(ca),
-                         'af_id': af_uid, 'status': 'ok'})
-        print(f'  {row["DMS_id"]}  af_id={af_uid}  n_res={len(ca)}  PR={pr:.2f}  n_mut={int(row["n_mutants"])}', flush=True)
+                         'status': 'ok'})
+        print(f'  {row["DMS_id"][:35]:<35}  n_res={len(ca):>5}  PR={pr:>7.2f}  n_mut={int(row["n_mutants"]):>6}', flush=True)
 
     table = pd.DataFrame(results)
     usable = table[table['status'] == 'ok'].copy()
@@ -238,8 +246,8 @@ def main():
         for lam in LAMBDA_SENSITIVITY:
             pr_lam = []
             for _, row in usable.iterrows():
-                uid = row['af_id']
-                pdb_path = os.path.join(af_cache, f'AF-{uid}.pdb')
+                uid = row['UniProt_ID']
+                pdb_path = os.path.join(struct_dir, f'{uid}.pdb')
                 ca = parse_pdb_ca(pdb_path)
                 coords = np.array([ca[k] for k in sorted(ca.keys())])
                 pr_lam.append(contact_PR_from_coords(coords, lam))

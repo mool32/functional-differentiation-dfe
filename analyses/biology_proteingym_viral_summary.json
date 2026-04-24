@@ -1,0 +1,65 @@
+{
+  "generated": "2026-04-24T21:12:33.333924+00:00",
+  "pre_registration": "invariants_preregistration_v5_proteingym_viral.md",
+  "pre_registration_commit": "5308efcf01",
+  "substrate": "ProteinGym v1 viral DMS subset",
+  "lambda_angstrom": 8.0,
+  "min_mutants": 100,
+  "n_proteins_ref": 31,
+  "n_proteins_usable": 31,
+  "primary": {
+    "rho": {
+      "rho": 0.09377836468220822,
+      "p": 0.6158171725126762,
+      "n": 31,
+      "ci_lo": -0.2372312612743214,
+      "ci_hi": 0.4021513179027893
+    },
+    "verdict": "HOLD (methodology gate failed)"
+  },
+  "methodology_null": {
+    "mean": 0.007460522676750386,
+    "std": 0.17725604082499646,
+    "ci_95": [
+      -0.3313603055722628,
+      0.36730867870044254
+    ],
+    "span": 0.36730867870044254,
+    "gate": "FAIL",
+    "adjusted_thresholds": null
+  },
+  "secondary_lambda_sensitivity": {
+    "6.0": 0.12281940664831141,
+    "10.0": 0.03690632416525613,
+    "12.0": 0.013108803665254912
+  },
+  "secondary_binary_outcome": {
+    "rho": 0.044620865569991945,
+    "p": 0.8116114996884168,
+    "n": 31,
+    "ci_lo": -0.3587087265249821,
+    "ci_hi": 0.436639751847208
+  },
+  "secondary_by_selection": {
+    "Activity": {
+      "n": 2,
+      "rho": null
+    },
+    "Binding": {
+      "n": 1,
+      "rho": null
+    },
+    "Expression": {
+      "n": 1,
+      "rho": null
+    },
+    "OrganismalFitness": {
+      "n": 21,
+      "rho": 0.2663202478882264
+    },
+    "Stability": {
+      "n": 6,
+      "rho": 0.2571428571428572
+    }
+  }
+}
