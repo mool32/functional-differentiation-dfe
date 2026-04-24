@@ -1,0 +1,125 @@
+{
+  "generated": "2026-04-24T17:53:26.546630+00:00",
+  "note": "Per-module test (n=43) using existing Paper 6 output. ML analog: head=module, unit of analysis=module across modules, not cells.",
+  "n_modules": 20,
+  "tests_1_4_dynamics_vs_perturbability": [
+    {
+      "dev_dataset": "Schiebinger",
+      "pert_dataset": "Dixit",
+      "dev_metric": "time_of_max_change",
+      "rho": -0.16191369422571422,
+      "p": 0.49524058684773287,
+      "n": 20,
+      "ci_lo": -0.6279807573936987,
+      "ci_hi": 0.34159603648169823
+    },
+    {
+      "dev_dataset": "Schiebinger",
+      "pert_dataset": "Dixit",
+      "dev_metric": "magnitude",
+      "rho": 0.28872180451127816,
+      "p": 0.21699266668730374,
+      "n": 20,
+      "ci_lo": -0.2331647544809234,
+      "ci_hi": 0.7033308802707131
+    },
+    {
+      "dev_dataset": "Schiebinger",
+      "pert_dataset": "Replogle",
+      "dev_metric": "time_of_max_change",
+      "rho": 0.025595042668881487,
+      "p": 0.9147007748736782,
+      "n": 20,
+      "ci_lo": -0.459782285984496,
+      "ci_hi": 0.48914674007628595
+    },
+    {
+      "dev_dataset": "Schiebinger",
+      "pert_dataset": "Replogle",
+      "dev_metric": "magnitude",
+      "rho": 0.30462582071531746,
+      "p": 0.19158394850814287,
+      "n": 20,
+      "ci_lo": -0.12633662573783272,
+      "ci_hi": 0.6275580212726675
+    },
+    {
+      "dev_dataset": "Bastidas",
+      "pert_dataset": "Dixit",
+      "dev_metric": "time_of_max_change",
+      "rho": 0.14672253735519358,
+      "p": 0.5370576597618093,
+      "n": 20,
+      "ci_lo": -0.28045928987712776,
+      "ci_hi": 0.5249607383859208
+    },
+    {
+      "dev_dataset": "Bastidas",
+      "pert_dataset": "Dixit",
+      "dev_metric": "magnitude",
+      "rho": 0.045112781954887216,
+      "p": 0.8502061902084872,
+      "n": 20,
+      "ci_lo": -0.48524913601226,
+      "ci_hi": 0.5174083481388619
+    },
+    {
+      "dev_dataset": "Bastidas",
+      "pert_dataset": "Replogle",
+      "dev_metric": "time_of_max_change",
+      "rho": -0.21550127888451873,
+      "p": 0.3615148390904188,
+      "n": 20,
+      "ci_lo": -0.5458907479603258,
+      "ci_hi": 0.1701038856224765
+    },
+    {
+      "dev_dataset": "Bastidas",
+      "pert_dataset": "Replogle",
+      "dev_metric": "magnitude",
+      "rho": 0.3894367350524845,
+      "p": 0.08965213403892132,
+      "n": 20,
+      "ci_lo": -0.15286241453542324,
+      "ci_hi": 0.7868463116717638
+    }
+  ],
+  "tests_within_timepoint_PR_vs_perturbability": [
+    {
+      "dataset": "Schieb_d2.5",
+      "pert_dataset": "Dixit",
+      "rho": 0.560813548334819,
+      "p": 0.00011197302647822595,
+      "n": 42,
+      "ci_lo": 0.29044554113278603,
+      "ci_hi": 0.749238203864259
+    },
+    {
+      "dataset": "Schieb_d2.5",
+      "pert_dataset": "Replogle",
+      "rho": 0.6793807241825168,
+      "p": 7.542298308355411e-07,
+      "n": 42,
+      "ci_lo": 0.4430306202819886,
+      "ci_hi": 0.838683828551697
+    },
+    {
+      "dataset": "BP_E12.5",
+      "pert_dataset": "Dixit",
+      "rho": 0.6004228329809724,
+      "p": 2.0779878738370073e-05,
+      "n": 43,
+      "ci_lo": 0.3426427675733088,
+      "ci_hi": 0.7847978603108257
+    },
+    {
+      "dataset": "BP_E12.5",
+      "pert_dataset": "Replogle",
+      "rho": 0.6880809874668848,
+      "p": 3.420323349233029e-07,
+      "n": 43,
+      "ci_lo": 0.45352652124893733,
+      "ci_hi": 0.8368584191021493
+    }
+  ]
+}
