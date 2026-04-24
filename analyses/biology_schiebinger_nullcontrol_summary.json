@@ -1,0 +1,36 @@
+{
+  "generated": "2026-04-24T15:41:02.693201+00:00",
+  "config": {
+    "n_hvg": 2000,
+    "n_pcs": 50,
+    "k_nn": 10,
+    "n_perm_c1": 1000,
+    "n_perm_c2": 100
+  },
+  "rho_actual_day2_3": -0.33690155714874614,
+  "C1_permutation": {
+    "null_mean": -0.00019525517910077205,
+    "null_std": 0.006749167456577421,
+    "null_ci_95": [
+      -0.013380716174448363,
+      0.01358596254139207
+    ],
+    "empirical_p_two_sided": 0.000999000999000999
+  },
+  "C2_methodology_check": {
+    "null_mean": 0.01986786585626804,
+    "null_std": 0.20004644200809854,
+    "null_ci_95": [
+      -0.3266860397961783,
+      0.3779319944787086
+    ],
+    "artifact_magnitude": 0.01986786585626804,
+    "verdict": "CLEAN (no methodology bias)"
+  },
+  "C3_day0_audit": {
+    "rho_PR_fate_day0": 0.21474414061754427,
+    "rho_PR_meanNNdist_day0": -0.25509775793474454,
+    "rho_PR_fate_day2_3": -0.33690155714874614,
+    "rho_PR_meanNNdist_day2_3": -0.354361156250395
+  }
+}
