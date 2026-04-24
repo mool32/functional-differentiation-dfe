@@ -1,0 +1,47 @@
+{
+  "generated": "2026-04-24T17:57:48.740606+00:00",
+  "steady_state_controls": [
+    {
+      "dataset": "hpa_PR_abs",
+      "pert": "Dixit",
+      "rho": 0.13017215342796737,
+      "p": 0.40541379612553086,
+      "n": 43,
+      "ci_lo": -0.206724148687168,
+      "ci_hi": 0.43071336712308006
+    },
+    {
+      "dataset": "hpa_PR_abs",
+      "pert": "Replogle",
+      "rho": 0.21821649690866757,
+      "p": 0.15978861083737408,
+      "n": 43,
+      "ci_lo": -0.12114212011476579,
+      "ci_hi": 0.5047897342606565
+    },
+    {
+      "dataset": "hpa_PR_signed",
+      "pert": "Dixit",
+      "rho": -0.04749679089279461,
+      "p": 0.7623088296311851,
+      "n": 43,
+      "ci_lo": -0.3746117015676797,
+      "ci_hi": 0.2910943676265571
+    },
+    {
+      "dataset": "hpa_PR_signed",
+      "pert": "Replogle",
+      "rho": 0.08571267279166168,
+      "p": 0.5847217011391382,
+      "n": 43,
+      "ci_lo": -0.22144119773326504,
+      "ci_hi": 0.35591977732663693
+    }
+  ],
+  "developmental_reference": {
+    "Schiebinger_d2.5_Dixit": 0.561,
+    "Schiebinger_d2.5_Replogle": 0.679,
+    "Bastidas_E12.5_Dixit": 0.6,
+    "Bastidas_E12.5_Replogle": 0.688
+  }
+}
