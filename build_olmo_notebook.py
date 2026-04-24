@@ -78,7 +78,7 @@ except Exception as e:
     raise RuntimeError(f'Drive mount required: {e}')
 
 GITHUB_RAW = '""" + GITHUB_RAW + """'
-PRE_REG_COMMIT = 'tbd — will be filled in by verdict JSON from local git hash'
+PRE_REG_COMMIT = '171aacd'  # invariants_preregistration_v3_olmo.md locked here
 
 def log(msg):
     print(f'[{time.strftime(\"%H:%M:%S\")}] {msg}', flush=True)"""))
