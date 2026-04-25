@@ -65,12 +65,14 @@ from huggingface_hub import list_repo_refs
 
 # PyTorch 2.6+ defaults weights_only=True which breaks legacy pickle
 # checkpoints (pytorch_model.bin format). TinyLlama uses this format.
-# Patch defaults back to weights_only=False for trusted HuggingFace sources.
-_orig_torch_load = torch.load
-def _patched_torch_load(*a, **kw):
-    kw['weights_only'] = False
-    return _orig_torch_load(*a, **kw)
-torch.load = _patched_torch_load
+# Patch defaults back to weights_only=False (idempotent — safe to re-run).
+if not getattr(torch.load, '__patched_legacy_pickle__', False):
+    _orig_torch_load = torch.load
+    def _patched_torch_load(*a, **kw):
+        kw['weights_only'] = False
+        return _orig_torch_load(*a, **kw)
+    _patched_torch_load.__patched_legacy_pickle__ = True
+    torch.load = _patched_torch_load
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(f'Device: {device}')
