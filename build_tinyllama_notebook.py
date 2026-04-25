@@ -239,14 +239,11 @@ def head_invariants(model, L, H):
     attn = get_attn(model, L)
     Wq = attn.q_proj.weight.detach().cpu().float().numpy()[H*D_HEAD:(H+1)*D_HEAD, :]
     Wo = attn.o_proj.weight.detach().cpu().float().numpy()[:, H*D_HEAD:(H+1)*D_HEAD]
-    # GQA handling: V slice may be from a smaller group
-    kv_slice_size = HIDDEN // N_KV
+    # GQA handling: each KV head has dimension d_head (not HIDDEN/N_KV).
+    # Q head H belongs to KV group (H * N_KV // N_HEADS).
     kv_group = H * N_KV // N_HEADS
-    Wv = attn.v_proj.weight.detach().cpu().float().numpy()[kv_group*kv_slice_size:(kv_group+1)*kv_slice_size, :]
-    Wk = attn.k_proj.weight.detach().cpu().float().numpy()[kv_group*kv_slice_size:(kv_group+1)*kv_slice_size, :]
-    # OV: project each Q head onto its KV-group's V then through O slice
-    # M_OV = Wo @ Wv (resize Wv if needed by tiling for shared V)
-    # When GQA: many Q heads share one V; OV per head uses same Wv but its own Wo slice
+    Wv = attn.v_proj.weight.detach().cpu().float().numpy()[kv_group*D_HEAD:(kv_group+1)*D_HEAD, :]
+    Wk = attn.k_proj.weight.detach().cpu().float().numpy()[kv_group*D_HEAD:(kv_group+1)*D_HEAD, :]
     sv_OV = np.linalg.svd(Wo @ Wv, compute_uv=False)
     sv_QK = np.linalg.svd(Wq.T @ Wk, compute_uv=False)
     return {
