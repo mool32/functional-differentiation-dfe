@@ -5,7 +5,7 @@ import json, os
 
 HERE = os.path.dirname(__file__)
 GITHUB_RAW = 'https://raw.githubusercontent.com/mool32/functional-differentiation-dfe/main'
-PRE_REG_COMMIT_PLACEHOLDER = 'TBDD'  # patched after first commit
+PRE_REG_COMMIT_PLACEHOLDER = '7523931'  # patched after first commit
 OUT = os.path.join(HERE, 'tier2_tinyllama_validation.ipynb')
 
 
