@@ -1,0 +1,53 @@
+{
+  "pre_registration_commit": "171aacd",
+  "pre_registration_file": "invariants_preregistration_v3_olmo.md",
+  "model": "allenai/OLMo-2-0425-1B-early-training",
+  "architecture": {
+    "n_layers": 16,
+    "n_heads": 16,
+    "n_heads_total_sampled": 256
+  },
+  "checkpoints_completed": [0, 1000, 2000, 4000, 8000, 16000],
+  "checkpoints_pre_registered": [0, 1000, 2000, 4000, 8000, 16000, 37000],
+  "checkpoints_missing": [37000],
+  "primary_result": {
+    "rho": -0.4868,
+    "ci_lo": -0.5776,
+    "ci_hi": -0.3877,
+    "p": 1.23e-16,
+    "n": 256
+  },
+  "primary_verdict": "PASS",
+  "methodology_null": {
+    "mean": 0.0062,
+    "std": 0.0605,
+    "ci_95": [-0.1098, 0.1201],
+    "span": 0.1201,
+    "gate": "CAUTION",
+    "adjusted_thresholds": {"strong": 0.35, "partial": 0.25, "weak": 0.15}
+  },
+  "trajectory_OV_PR": {
+    "1000": -0.4868,
+    "2000": -0.7337,
+    "4000": -0.3334,
+    "8000": 0.2780,
+    "16000": 0.2921
+  },
+  "trajectory_QK_PR": {
+    "1000": -0.3230,
+    "2000": -0.3247,
+    "4000": 0.1124,
+    "8000": 0.4199,
+    "16000": 0.4090
+  },
+  "qk_gap_active_minus_dead": {
+    "step_16000": 12.99,
+    "note": "step 37000 not yet run; gap likely larger at full training"
+  },
+  "cross_scale_comparison": {
+    "Pythia_160M": -0.416,
+    "Pythia_410M": -0.555,
+    "Pythia_1.4B": -0.484,
+    "OLMo2_1B": -0.4868
+  }
+}
