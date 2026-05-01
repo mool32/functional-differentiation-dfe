@@ -1,7 +1,7 @@
 # Pre-registration v2 — Pythia 1.4B validation of early-training spectral signal
 
 **Locked:** 2026-04-24
-**Author:** Theodor Spiro (theospirin@gmail.com)
+**Author:** Theodor Spiro (tspiro@vaika.org)
 **Context:** Exploratory findings from Phase 1b on 410M and 160M require independent-scale validation. This document pre-registers the 1.4B tests **before** any 1.4B invariant or ablation data is computed. No GPU work on 1.4B has occurred at the time of locking.
 
 ---

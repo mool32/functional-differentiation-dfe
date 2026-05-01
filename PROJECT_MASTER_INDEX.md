@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-04-25
 **GitHub:** https://github.com/mool32/functional-differentiation-dfe
-**Author:** Theodor Spiro (theospirin@gmail.com), Paper 1 arXiv 2604.10571
+**Author:** Theodor Spiro (tspiro@vaika.org), Paper 1 arXiv 2604.10571
 
 This is the single index across the entire project. Three companion state docs go deeper on specific tracks:
 - `SESSION_STATE_2026_04_24.md` — ML Phase 1 invariant search

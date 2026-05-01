@@ -6,7 +6,7 @@ Read this FIRST when resuming.
 
 **GitHub:** https://github.com/mool32/functional-differentiation-dfe
 **Latest commit:** `b69cfbf` (Tier 1 integrated into Paper 2)
-**Author:** Theodor Spiro, theospirin@gmail.com
+**Author:** Theodor Spiro, tspiro@vaika.org
 
 ## Two papers in flight
 

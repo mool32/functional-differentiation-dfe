@@ -48,9 +48,12 @@ Living document. Accumulate items as they arise during writing.
 
 ## Acknowledgements / disclosures
 
-- [ ] "Analysis conducted with extensive use of Claude (Anthropic) as thinking and implementation partner"
 - [ ] Hardware: Google Colab Pro A100, runtime 82 min, total cost ≈ $4
 - [ ] Data source: Pythia 410M-deduped (EleutherAI), wikitext-103 (HuggingFace)
+- Note: per the pi-tissue-aging precedent (bioRxiv resubmission feedback), naming
+  computational tools as Acknowledgements is non-standard for ML/biology venues —
+  the Acknowledgements section was removed from main.tex, and this checklist
+  item is intentionally not carried forward.
 
 ## ArXiv submission details
 

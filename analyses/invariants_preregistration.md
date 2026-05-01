@@ -1,7 +1,7 @@
 # Pre-registration: static head-level invariants as predictors of DFE tail weight
 
 **Locked:** 2026-04-24, before any Phase 1a computation
-**Author:** Theodor Spiro (theospirin@gmail.com)
+**Author:** Theodor Spiro (tspiro@vaika.org)
 **Context:** Paper 2 follow-up — upgrade categorical "emergent/born" framing to measurement-based invariant framing; aiming for substrate-independent predictor of DFE tail structure.
 
 This document is binding on analysis decisions. Results reported deviating
